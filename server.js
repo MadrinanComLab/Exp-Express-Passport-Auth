@@ -13,7 +13,11 @@ const app = express();
 const initializePassport = require("./passport.config");
 initializePassport(
     passport, 
-    email => users.find(user => user.email === email)
+    /** THE LINE OF CODE BELOW IS THE getUserByEmail BEING PASSED TO initialize OF passport.config.js */
+    email => users.find(user => user.email === email),
+
+    /** THE LINE OF CODE BELOW IS THE getUserById BEING PASSED TO initialize OF passport.config.js */
+    id => users.find(user => user.id === id),
 );
 
 /** USER DATA WOULD BE SAVED HERE INSTEAD OF DATABASE. THIS IS FOR DEMO PURPOSE ONLY. */
@@ -31,7 +35,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get("/", (req, res) => {
-    res.render("index.ejs", { name: "Clifford" });
+    res.render("index.ejs", { name: req.user.name });
 });
 
 app.get("/login", (req, res) => {
