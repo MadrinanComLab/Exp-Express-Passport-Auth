@@ -8,5 +8,25 @@
     </head>
     <body>
         <h1>Login</h1>
+
+        <form action="/login" method="POST">
+            <div>
+                <label for="email">
+                    Email:
+                    <input type="email" name="email" id="email" placeholder="Enter your email" required>
+                </label>
+            </div>
+            
+            <div>
+                <label for="password">
+                    Password:
+                    <input type="password" name="password" id="password" placeholder="Enter your password" required>
+                </label>
+            </div>
+
+            <input type="submit" value="Login">
+        </form>
+
+        <a href="/register">Don't have an account?</a>
     </body>
 </html>

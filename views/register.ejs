@@ -8,5 +8,32 @@
     </head>
     <body>
         <h1>Register</h1>
+
+        <form action="/register" method="POST">
+            <div>
+                <label for="name">
+                    Name:
+                    <input type="text" name="name" id="name" placeholder="Enter your name" required>
+                </label>
+            </div>
+            
+            <div>
+                <label for="email">
+                    Email:
+                    <input type="email" name="email" id="email" placeholder="Enter your email" required>
+                </label>
+            </div>
+            
+            <div>
+                <label for="password">
+                    Password:
+                    <input type="password" name="password" id="password" placeholder="Enter your password" required>
+                </label>
+            </div>
+
+            <input type="submit" value="Register">
+        </form>
+
+        <a href="/login">Already have an account?</a>
     </body>
 </html>
