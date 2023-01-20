@@ -34,25 +34,25 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get("/", (req, res) => {
+app.get("/", checkAuthenticated, (req, res) => {
     res.render("index.ejs", { name: req.user.name });
 });
 
-app.get("/login", (req, res) => {
+app.get("/login", checkNotAuthenticated, (req, res) => {
     res.render("login.ejs");
 });
 
-app.post("/login", passport.authenticate("local", {
+app.post("/login", checkNotAuthenticated, passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/login",
     failureFlash: true
 }));
 
-app.get("/register", (req, res) => {
+app.get("/register", checkNotAuthenticated, (req, res) => {
     res.render("register.ejs");
 });
 
-app.post("/register", async (req, res) => {
+app.post("/register", checkNotAuthenticated, async (req, res) => {
     try{
         const hashed_password = await bcrypt.hash(req.body.password, 10);
 
@@ -70,5 +70,23 @@ app.post("/register", async (req, res) => {
     }
     console.log(users);
 });
+
+function checkAuthenticated(req, res, next){
+    /** isAuthenticated IS BUILT-IN FUNCTION OF 'passport' LIBRARY */
+    if(req.isAuthenticated()){
+        return next();
+    }
+
+    res.redirect("/login");
+}
+
+function checkNotAuthenticated(req, res, next){
+    /** isAuthenticated IS BUILT-IN FUNCTION OF 'passport' LIBRARY */
+    if(req.isAuthenticated()){
+        return res.redirect("/");
+    }
+
+    next();
+}
 
 app.listen(3000, () => console.log("Server running in port 3000..."));
